@@ -1,0 +1,4 @@
+rootProject.name = 'audio-platform'
+
+include 'auth_service'
+include 'audio_service'
