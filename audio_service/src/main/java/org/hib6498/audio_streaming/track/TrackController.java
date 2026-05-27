@@ -9,7 +9,7 @@ import org.hib6498.audio_streaming.entities.TrackEntity;
 import org.hib6498.audio_streaming.entities.UserInfoEntity;
 import org.hib6498.audio_streaming.exceptions.NotFoundException;
 import org.hib6498.audio_streaming.track_user.TrackUserService;
-import org.hib6498.audio_streaming.user.TracksForArtistDTO;
+import org.hib6498.audio_streaming.shared.TracksForArtistDTO;
 import org.hib6498.audio_streaming.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

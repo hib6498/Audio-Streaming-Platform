@@ -2,7 +2,10 @@ package org.hib6498.audio_streaming.entities;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Data
 @Accessors(chain = true)
+@EqualsAndHashCode(of = "trackId")
 public class TrackEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)

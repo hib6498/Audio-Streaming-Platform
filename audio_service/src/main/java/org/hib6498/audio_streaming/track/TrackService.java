@@ -18,7 +18,6 @@ public class TrackService {
   }
 
   public TrackEntity saveTrack(UserInfoEntity userInfoEntity, TrackUploadRequestDTO detailsDTO) {
-
     String trackSavedUri = storageService.saveTrack(detailsDTO.trackFile());
 
     String artworkSavedUri = "";

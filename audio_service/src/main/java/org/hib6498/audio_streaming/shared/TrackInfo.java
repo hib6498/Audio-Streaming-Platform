@@ -1,11 +1,10 @@
-package org.hib6498.audio_streaming.track_user;
+package org.hib6498.audio_streaming.shared;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hib6498.audio_streaming.user.UserIdDisplayNameDTO;
 
 @Data
 @Accessors(chain = true)

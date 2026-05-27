@@ -1,6 +1,8 @@
 package org.hib6498.audio_streaming.user;
 
 import java.util.List;
+
+import org.hib6498.audio_streaming.shared.TracksForArtistDTO;
 import org.hib6498.audio_streaming.track_user.TrackUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

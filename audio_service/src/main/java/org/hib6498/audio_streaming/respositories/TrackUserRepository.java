@@ -3,14 +3,14 @@ package org.hib6498.audio_streaming.respositories;
 import java.util.List;
 import org.hib6498.audio_streaming.entities.TrackUserEntity;
 import org.hib6498.audio_streaming.entities.TrackUserKey;
-import org.hib6498.audio_streaming.track_user.TrackArtistQueryResult;
+import org.hib6498.audio_streaming.shared.TrackArtistQueryResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface TrackUserRepository extends JpaRepository<TrackUserEntity, TrackUserKey> {
   @Query(
       """
-          SELECT new org.hib6498.audio_streaming.track_user.TrackArtistQueryResult(
+          SELECT new org.hib6498.audio_streaming.shared.TrackArtistQueryResult(
               t.trackId,
               u.userId,
               ta.isFeature,
@@ -29,7 +29,7 @@ public interface TrackUserRepository extends JpaRepository<TrackUserEntity, Trac
 
   @Query(
       """
-          SELECT new org.hib6498.audio_streaming.track_user.TrackArtistQueryResult(
+          SELECT new org.hib6498.audio_streaming.shared.TrackArtistQueryResult(
               t.trackId,
               u.userId,
               ta.isFeature,

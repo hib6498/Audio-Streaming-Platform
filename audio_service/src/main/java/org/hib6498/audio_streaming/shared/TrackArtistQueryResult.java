@@ -1,4 +1,4 @@
-package org.hib6498.audio_streaming.track_user;
+package org.hib6498.audio_streaming.shared;
 
 import java.sql.Timestamp;
 
