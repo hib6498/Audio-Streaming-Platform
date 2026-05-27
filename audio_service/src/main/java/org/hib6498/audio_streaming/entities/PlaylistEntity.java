@@ -2,6 +2,8 @@ package org.hib6498.audio_streaming.entities;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -13,6 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Accessors(chain = true)
 public class PlaylistEntity {
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "playlist_id", updatable = false)
   private Long playlistId;
 
@@ -32,13 +35,4 @@ public class PlaylistEntity {
 
   @Column(name = "cover_art")
   private String coverArt;
-
-  @ManyToMany(
-      fetch = FetchType.LAZY,
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  @JoinTable(
-      name = "playlist_track",
-      joinColumns = @JoinColumn(name = "playlist_id"),
-      inverseJoinColumns = @JoinColumn(name = "track_id"))
-  private Set<TrackEntity> tracks;
 }

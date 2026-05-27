@@ -1,0 +1,23 @@
+package org.hib6498.audio_streaming.entities;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+@Entity
+@Table(name = "playlist_track")
+@Data
+@Accessors(chain = true)
+public class PlaylistTrackEntity {
+  @EmbeddedId private PlaylistTrackKey key;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @MapsId(value = "trackId")
+  @JoinColumn(name = "track_id")
+  private TrackEntity track;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @MapsId(value = "playlistId")
+  @JoinColumn(name = "playlist_id")
+  private PlaylistEntity playlist;
+}
