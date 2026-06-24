@@ -1,4 +1,4 @@
-package org.hib6498.audio_streaming.entities;
+package org.hib6498.audio_streaming.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

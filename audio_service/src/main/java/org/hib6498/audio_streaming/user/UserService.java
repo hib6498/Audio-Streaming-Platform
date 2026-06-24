@@ -1,9 +1,9 @@
 package org.hib6498.audio_streaming.user;
 
 import java.util.*;
-import org.hib6498.audio_streaming.entities.UserInfoEntity;
-import org.hib6498.audio_streaming.respositories.TrackUserRepository;
-import org.hib6498.audio_streaming.respositories.UserInfoRepository;
+import org.hib6498.audio_streaming.exceptions.ForbiddenException;
+import org.hib6498.audio_streaming.exceptions.UnauthorizedAccessException;
+import org.hib6498.audio_streaming.track.TrackUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -50,10 +50,12 @@ public class UserService {
   }
 
   public UserInfoEntity populateUserInfoObject(UserInfoEntity partialInfo) {
+    if (Objects.isNull(partialInfo)) throw new UnauthorizedAccessException("You are not logged in.");
     Optional<UserInfoEntity> user = userInfoRepository.findById(partialInfo.getUserId());
     if (user.isPresent()) return user.get();
 
     UserInfoEntity requestedInfo = getUserInfoFromAuthService(partialInfo.getUserId());
+    if (Objects.isNull(requestedInfo)) throw new ForbiddenException("No user found");
 
     return userInfoRepository.save(requestedInfo);
   }

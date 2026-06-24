@@ -1,8 +1,7 @@
-package org.hib6498.audio_streaming.respositories;
+package org.hib6498.audio_streaming.user;
 
 import java.util.List;
-import org.hib6498.audio_streaming.entities.UserInfoEntity;
-import org.hib6498.audio_streaming.user.UserInfoDTO;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
