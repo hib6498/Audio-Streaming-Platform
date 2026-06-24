@@ -23,7 +23,7 @@ public class RSA_KeyUtils {
     String beginStr = "-----BEGIN PUBLIC KEY-----";
     String endStr = "-----END PUBLIC KEY-----";
     String key =
-        keyFile.replace(beginStr, "").replaceAll(System.lineSeparator(), "").replace(endStr, "");
+        keyFile.replace(beginStr, "").replace(endStr, "").replaceAll("\\s+", ""); // ← same fix here
 
     byte[] encoded = Base64.getDecoder().decode(key);
 

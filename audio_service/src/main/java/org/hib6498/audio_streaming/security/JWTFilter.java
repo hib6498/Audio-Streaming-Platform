@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.NonNull;
-import org.hib6498.audio_streaming.entities.UserInfoEntity;
+import org.hib6498.audio_streaming.user.UserInfoEntity;
 import org.hib6498.audio_streaming.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
