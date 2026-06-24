@@ -1,9 +1,9 @@
-package org.hib6498.audio_streaming.respositories;
+package org.hib6498.audio_streaming.playlist;
 
 import java.util.List;
-import org.hib6498.audio_streaming.entities.PlaylistTrackEntity;
-import org.hib6498.audio_streaming.entities.PlaylistTrackKey;
-import org.hib6498.audio_streaming.shared.TrackArtistQueryResult;
+
+import org.hib6498.audio_streaming.track.TrackEntity;
+import org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,7 +11,7 @@ public interface PlaylistTrackRepository
     extends JpaRepository<PlaylistTrackEntity, PlaylistTrackKey> {
   @Query(
         """
-            SELECT new org.hib6498.audio_streaming.shared.TrackArtistQueryResult(
+            SELECT new org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult(
                 t.trackId,
                 u.userId,
                 ta.role,
@@ -26,4 +26,6 @@ public interface PlaylistTrackRepository
             WHERE pt.playlist.playlistId = :playlistId
         """)
   List<TrackArtistQueryResult> findPlaylistTrackInfo(Long playlistId);
+
+  void deleteAllByTrack(TrackEntity track);
 }
