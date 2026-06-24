@@ -1,4 +1,4 @@
-package org.hib6498.audio_streaming.entities;
+package org.hib6498.audio_streaming.track;
 
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;

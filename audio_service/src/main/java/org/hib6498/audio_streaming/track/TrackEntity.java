@@ -1,4 +1,4 @@
-package org.hib6498.audio_streaming.entities;
+package org.hib6498.audio_streaming.track;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.hib6498.audio_streaming.store.StorageStatusEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Table(name = "tracks")
@@ -33,8 +34,7 @@ public class TrackEntity {
   @Column(name = "created_at", updatable = false, nullable = false)
   private Timestamp createdAt;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "track_id")
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "track")
   private List<TrackUserEntity> features;
 
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

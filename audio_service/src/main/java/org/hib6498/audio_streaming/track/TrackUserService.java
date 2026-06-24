@@ -1,16 +1,13 @@
-package org.hib6498.audio_streaming.track_user;
+package org.hib6498.audio_streaming.track;
 
-import static org.hib6498.audio_streaming.shared.TrackArtistQueryConverter.convertTAQueryResultToTFADTO;
+import static org.hib6498.audio_streaming.track.daos.TrackArtistQueryConverter.convertTAQueryResultToTFADTO;
 
 import java.util.List;
 import java.util.Objects;
-import org.hib6498.audio_streaming.entities.*;
-import org.hib6498.audio_streaming.respositories.TrackUserRepository;
-import org.hib6498.audio_streaming.shared.TrackArtistQueryResult;
-import org.hib6498.audio_streaming.shared.TracksForArtistDTO;
-import org.hib6498.audio_streaming.track.TrackEntity;
-import org.hib6498.audio_streaming.track.TrackUserEntity;
-import org.hib6498.audio_streaming.track.TrackUserKey;
+
+import org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult;
+import org.hib6498.audio_streaming.track.dtos.TracksForArtist;
+import org.hib6498.audio_streaming.user.UserInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class TrackUserService {
   @Autowired private TrackUserRepository trackUserRepository;
 
-  public List<TracksForArtistDTO> getAllTracks() {
+  public List<TracksForArtist> getAllTracks() {
     List<TrackArtistQueryResult> results = trackUserRepository.findAllTracksWithArtists();
     return convertTAQueryResultToTFADTO(results);
   }
 
-  public List<TracksForArtistDTO> findTracksForUser(Long userId) {
+  public List<TracksForArtist> findTracksForUser(Long userId) {
     List<TrackArtistQueryResult> results = trackUserRepository.findTracksWithArtists(userId);
     return convertTAQueryResultToTFADTO(results);
   }
@@ -49,4 +46,6 @@ public class TrackUserService {
 
     return trackUserRepository.saveAll(features);
   }
+
+
 }

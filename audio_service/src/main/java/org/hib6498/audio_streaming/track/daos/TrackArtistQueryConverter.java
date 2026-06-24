@@ -1,14 +1,15 @@
-package org.hib6498.audio_streaming.shared;
+package org.hib6498.audio_streaming.track.daos;
 
-import org.hib6498.audio_streaming.entities.TrackRole;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.hib6498.audio_streaming.track.TrackRole;
+import org.hib6498.audio_streaming.track.dtos.TrackInfo;
+import org.hib6498.audio_streaming.track.dtos.TracksForArtist;
+import org.hib6498.audio_streaming.user.UserIdDisplayNameDTO;
 
 public class TrackArtistQueryConverter {
-  public static List<TracksForArtistDTO> convertTAQueryResultToTFADTO(
+  public static List<TracksForArtist> convertTAQueryResultToTFADTO(
       List<TrackArtistQueryResult> results) {
     Map<Long, TrackInfo> transformedInfo = new HashMap<>();
 
@@ -16,27 +17,16 @@ public class TrackArtistQueryConverter {
       Long trackId = result.trackId();
 
       TrackInfo trackInfo =
-          transformedInfo.computeIfAbsent(
-              trackId,
-              id ->
-                  new TrackInfo()
-                      .setTitle(result.title())
-                      .setArtworkUrl("http://localhost:8090/api/v1/track/" + trackId + "/artwork")
-                      .setCreatedAt(result.createdAt())
-                      .setAudioUrl("http://localhost:8090/api/v1/track/" + trackId)
-                      .setFeatures(new ArrayList<>()));
+          transformedInfo.computeIfAbsent(trackId, id -> TrackInfo.from(result, id));
 
       UserIdDisplayNameDTO artist = new UserIdDisplayNameDTO(result.userId(), result.displayName());
 
-      if (result.role() == TrackRole.FEATURE) {
-        trackInfo.getFeatures().add(artist);
-      } else {
-        trackInfo.setOwns(artist);
-      }
+      trackInfo.getFeatures().add(artist);
+      if (result.role() == TrackRole.OWNER) trackInfo.setOwns(artist);
     }
 
     return transformedInfo.entrySet().stream()
-        .map(entry -> new TracksForArtistDTO(entry.getKey(), entry.getValue()))
+        .map(entry -> new TracksForArtist(entry.getKey(), entry.getValue()))
         .toList();
   }
 }

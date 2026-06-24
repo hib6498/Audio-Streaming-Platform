@@ -1,9 +1,9 @@
-package org.hib6498.audio_streaming.entities;
+package org.hib6498.audio_streaming.track;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hib6498.audio_streaming.track.TrackEntity;
+import org.hib6498.audio_streaming.user.UserInfoEntity;
 
 @Entity
 @Data

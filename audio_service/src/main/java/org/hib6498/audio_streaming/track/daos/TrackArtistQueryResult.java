@@ -1,7 +1,7 @@
-package org.hib6498.audio_streaming.shared;
+package org.hib6498.audio_streaming.track.daos;
 
 import java.sql.Timestamp;
-import org.hib6498.audio_streaming.entities.TrackRole;
+import org.hib6498.audio_streaming.track.TrackRole;
 
 public record TrackArtistQueryResult(
     Long trackId,

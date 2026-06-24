@@ -1,16 +1,14 @@
-package org.hib6498.audio_streaming.respositories;
+package org.hib6498.audio_streaming.track;
 
 import java.util.List;
-import org.hib6498.audio_streaming.track.TrackUserEntity;
-import org.hib6498.audio_streaming.track.TrackUserKey;
-import org.hib6498.audio_streaming.shared.TrackArtistQueryResult;
+import org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface TrackUserRepository extends JpaRepository<TrackUserEntity, TrackUserKey> {
   @Query(
       """
-          SELECT new org.hib6498.audio_streaming.shared.TrackArtistQueryResult(
+          SELECT new org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult(
               t.trackId,
               u.userId,
               ta.role,
@@ -29,7 +27,7 @@ public interface TrackUserRepository extends JpaRepository<TrackUserEntity, Trac
 
   @Query(
       """
-          SELECT new org.hib6498.audio_streaming.shared.TrackArtistQueryResult(
+          SELECT new org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult(
               t.trackId,
               u.userId,
               ta.role,
@@ -40,7 +38,10 @@ public interface TrackUserRepository extends JpaRepository<TrackUserEntity, Trac
           FROM TrackUserEntity ta
           JOIN ta.track t
           JOIN ta.userInfo u
+          WHERE t.trackStatus = org.hib6498.audio_streaming.track.TrackStatus.READY
           ORDER BY t.createdAt DESC
         """)
   List<TrackArtistQueryResult> findAllTracksWithArtists();
+
+
 }
