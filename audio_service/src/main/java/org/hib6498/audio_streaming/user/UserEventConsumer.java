@@ -3,8 +3,6 @@ package org.hib6498.audio_streaming.user;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.hib6498.audio_streaming.entities.UserInfoEntity;
-import org.hib6498.audio_streaming.respositories.UserInfoRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

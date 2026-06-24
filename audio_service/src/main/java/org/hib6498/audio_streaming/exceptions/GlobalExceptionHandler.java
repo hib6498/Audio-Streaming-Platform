@@ -12,6 +12,11 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
   }
 
+  @ExceptionHandler(ForbiddenException.class)
+  public ResponseEntity<String> resourceForbidden(ForbiddenException ex) {
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+  }
+
   @ExceptionHandler(NotFoundException.class)
   public ResponseEntity<String> notFound(NotFoundException ex) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());

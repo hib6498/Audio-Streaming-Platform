@@ -21,13 +21,15 @@ public class RSA_KeyUtils {
   private Resource publicKeyResource;
 
   public RSAKey getRSAPrivateKey()
-      throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+          throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
     String keyFile = new String(privateKeyResource.getInputStream().readAllBytes());
 
     String beginStr = "-----BEGIN PRIVATE KEY-----";
     String endStr = "-----END PRIVATE KEY-----";
-    String key =
-        keyFile.replace(beginStr, "").replaceAll(System.lineSeparator(), "").replace(endStr, "");
+    String key = keyFile
+            .replace(beginStr, "")
+            .replace(endStr, "")
+            .replaceAll("\\s+", "");  // ← handles \r\n, \n, spaces regardless of OS
 
     byte[] encoded = Base64.getDecoder().decode(key);
 
@@ -37,13 +39,15 @@ public class RSA_KeyUtils {
   }
 
   public RSAKey getRSAPublicKey()
-      throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+          throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
     String keyFile = new String(publicKeyResource.getInputStream().readAllBytes());
 
     String beginStr = "-----BEGIN PUBLIC KEY-----";
     String endStr = "-----END PUBLIC KEY-----";
-    String key =
-        keyFile.replace(beginStr, "").replaceAll(System.lineSeparator(), "").replace(endStr, "");
+    String key = keyFile
+            .replace(beginStr, "")
+            .replace(endStr, "")
+            .replaceAll("\\s+", "");  // ← same fix here
 
     byte[] encoded = Base64.getDecoder().decode(key);
 

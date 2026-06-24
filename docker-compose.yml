@@ -1,0 +1,65 @@
+name: audio-streaming
+
+services:
+#  audio-service:
+#    build:
+#      context: "./audio_service"
+#    ports:
+#      - "8090:8080"
+#    depends_on:
+#      postgres:
+#        condition: service_started
+#      rabbit-mq:
+#        condition: service_started
+#      garage:
+#        condition: service_started
+#
+#  auth-service:
+#    build:
+#      context: "./auth_service"
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      postgres:
+#        condition: service_started
+#      rabbit-mq:
+#        condition: service_started
+
+  garage:
+    image: "dxflrs/garage:v2.3.0"
+    container_name: "garage"
+    command: /garage server --single-node --default-bucket
+    ports:
+      - "3900:3900"   # S3 API
+      - "3901:3901"   # RPC
+      - "3902:3902"   # Web/static hosting
+      - "3903:3903"   # Admin API
+    volumes:
+      - "./data/garage/meta:/data/meta"
+      - "./data/garage/data:/data/data"
+      - "./garage/garage.toml:/etc/garage.toml"
+    environment:
+      - GARAGE_DEFAULT_ACCESS_KEY=255ac1200a4ed75e3b4d11969cef668ca2c59d62c86a3fae8fa5990863f5ab99
+      - GARAGE_DEFAULT_SECRET_KEY=80338d8f548b522d7b6673f71907641553254d1a91cf1dc3df9b5184f5b971e6
+      - GARAGE_DEFAULT_BUCKET=my-bucket
+    restart: unless-stopped
+
+  rabbit-mq:
+    container_name: "rabbitmq"
+    image: "rabbitmq:4-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "./data/rabbitmq:/var/lib/rabbitmq"
+
+  postgres:
+    container_name: "postgres"
+    image: "postgres:18.4-bookworm"
+    ports:
+      - "5433:5432"
+    volumes:
+      - "./data/postgres:/var/lib/postgresql"
+    environment:
+      POSTGRES_PASSWORD: "guest"
+      POSTGRES_USER: "guest"

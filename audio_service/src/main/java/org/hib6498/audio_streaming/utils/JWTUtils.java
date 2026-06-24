@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAKey;
 import java.security.spec.InvalidKeySpecException;
-import org.hib6498.audio_streaming.entities.UserInfoEntity;
+import org.hib6498.audio_streaming.user.UserInfoEntity;
 import org.springframework.stereotype.Component;
 
 @Component
