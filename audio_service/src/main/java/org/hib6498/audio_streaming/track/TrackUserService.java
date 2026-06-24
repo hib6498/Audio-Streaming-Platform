@@ -1,18 +1,18 @@
 package org.hib6498.audio_streaming.track_user;
 
-import java.util.List;
+import static org.hib6498.audio_streaming.shared.TrackArtistQueryConverter.convertTAQueryResultToTFADTO;
 
-import org.hib6498.audio_streaming.entities.TrackEntity;
-import org.hib6498.audio_streaming.entities.TrackUserEntity;
-import org.hib6498.audio_streaming.entities.TrackUserKey;
-import org.hib6498.audio_streaming.entities.UserInfoEntity;
-import org.hib6498.audio_streaming.shared.TrackArtistQueryResult;
+import java.util.List;
+import java.util.Objects;
+import org.hib6498.audio_streaming.entities.*;
 import org.hib6498.audio_streaming.respositories.TrackUserRepository;
+import org.hib6498.audio_streaming.shared.TrackArtistQueryResult;
 import org.hib6498.audio_streaming.shared.TracksForArtistDTO;
+import org.hib6498.audio_streaming.track.TrackEntity;
+import org.hib6498.audio_streaming.track.TrackUserEntity;
+import org.hib6498.audio_streaming.track.TrackUserKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static org.hib6498.audio_streaming.shared.TrackArtistQueryConverter.convertTAQueryResultToTFADTO;
 
 @Service
 public class TrackUserService {
@@ -29,7 +29,7 @@ public class TrackUserService {
   }
 
   public List<TrackUserEntity> saveFeaturesForTrack(
-      TrackEntity track, List<UserInfoEntity> featuresInfo, Long notFeaturedId) {
+          TrackEntity track, List<UserInfoEntity> featuresInfo, Long ownerId) {
     List<TrackUserEntity> features =
         featuresInfo.stream()
             .map(
@@ -40,7 +40,10 @@ public class TrackUserService {
                                 .setTrackId(track.getTrackId())
                                 .setUserId(user.getUserId()))
                         .setTrack(track)
-                        .setFeature(!user.getUserId().equals(notFeaturedId))
+                        .setRole(
+                            Objects.equals(user.getUserId(), ownerId)
+                                ? TrackRole.OWNER
+                                : TrackRole.FEATURE)
                         .setUserInfo(user))
             .toList();
 

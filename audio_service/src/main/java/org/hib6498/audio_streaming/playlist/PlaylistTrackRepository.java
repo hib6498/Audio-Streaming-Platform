@@ -14,7 +14,7 @@ public interface PlaylistTrackRepository
             SELECT new org.hib6498.audio_streaming.shared.TrackArtistQueryResult(
                 t.trackId,
                 u.userId,
-                ta.isFeature,
+                ta.role,
                 u.displayName,
                 t.createdAt,
                 t.title

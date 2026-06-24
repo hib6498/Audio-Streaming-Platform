@@ -1,5 +1,7 @@
 package org.hib6498.audio_streaming.shared;
 
+import org.hib6498.audio_streaming.entities.TrackRole;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +28,7 @@ public class TrackArtistQueryConverter {
 
       UserIdDisplayNameDTO artist = new UserIdDisplayNameDTO(result.userId(), result.displayName());
 
-      if (result.isFeature()) {
+      if (result.role() == TrackRole.FEATURE) {
         trackInfo.getFeatures().add(artist);
       } else {
         trackInfo.setOwns(artist);

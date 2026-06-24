@@ -1,4 +1,4 @@
-package org.hib6498.audio_streaming.track;
+package org.hib6498.audio_streaming.store;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,7 +23,7 @@ public class StorageService {
 
   public StorageService(
       @Value("${TRACK_STORAGE_LOCATION}") String trackStorageLoc,
-      @Value("${TRACK_STORAGE_LOCATION}") String artworkStorageLoc) {
+      @Value("${ARTWORK_STORAGE_LOCATION}") String artworkStorageLoc) {
     trackStoragePath = Paths.get(trackStorageLoc);
     artworkStoragePath = Paths.get(artworkStorageLoc);
   }

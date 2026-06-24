@@ -3,6 +3,7 @@ package org.hib6498.audio_streaming.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hib6498.audio_streaming.track.TrackEntity;
 
 @Entity
 @Table(name = "playlist_track")

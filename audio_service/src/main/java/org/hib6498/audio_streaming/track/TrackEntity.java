@@ -2,8 +2,7 @@ package org.hib6498.audio_streaming.entities;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
-
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -23,16 +22,9 @@ public class TrackEntity {
   @Column(name = "title", nullable = false)
   private String title;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id")
-  private UserInfoEntity userInfo;
-
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "album_id")
-  private AlbumEntity album;
-
-  @Column(name = "storage_loc", nullable = false)
-  private String storageLoc;
+  @Column(name = "status", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private TrackStatus trackStatus;
 
   @Column(name = "cover_art")
   private String coverArt;
@@ -40,4 +32,12 @@ public class TrackEntity {
   @CreationTimestamp
   @Column(name = "created_at", updatable = false, nullable = false)
   private Timestamp createdAt;
+
+  @OneToMany(fetch = FetchType.EAGER)
+  @JoinColumn(name = "track_id")
+  private List<TrackUserEntity> features;
+
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "storage_status_id")
+  private StorageStatusEntity store;
 }

@@ -3,6 +3,7 @@ package org.hib6498.audio_streaming.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hib6498.audio_streaming.track.TrackEntity;
 
 @Entity
 @Data
@@ -21,6 +22,6 @@ public class TrackUserEntity {
   @JoinColumn(name = "user_id")
   private UserInfoEntity userInfo;
 
-  @Column(name = "is_feature", nullable = false)
-  private boolean isFeature;
+  @Column(name = "role", nullable = false)
+  private TrackRole role;
 }
