@@ -1,7 +1,6 @@
 package org.hib6498.audio_streaming.user;
 
 import java.util.List;
-import org.hib6498.audio_streaming.playlist.PlaylistEntity;
 import org.hib6498.audio_streaming.playlist.PlaylistService;
 import org.hib6498.audio_streaming.playlist.dtos.PlaylistInfoResponse;
 import org.hib6498.audio_streaming.track.TrackUserService;

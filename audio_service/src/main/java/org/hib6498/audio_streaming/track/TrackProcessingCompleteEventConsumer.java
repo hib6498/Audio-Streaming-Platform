@@ -7,7 +7,6 @@ import org.hib6498.audio_streaming.track.dtos.TrackProcessingCompleteEvent;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TrackProcessingCompleteEventConsumer {

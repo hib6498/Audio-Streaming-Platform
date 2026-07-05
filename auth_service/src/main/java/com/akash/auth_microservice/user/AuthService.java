@@ -1,7 +1,7 @@
 package com.akash.auth_microservice.user;
 
-import com.akash.auth_microservice.refreshToken.RefreshToken;
 import com.akash.auth_microservice.exceptions.UserAlreadyExistsException;
+import com.akash.auth_microservice.refreshToken.RefreshToken;
 import com.akash.auth_microservice.refreshToken.RefreshTokenService;
 import com.akash.auth_microservice.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;

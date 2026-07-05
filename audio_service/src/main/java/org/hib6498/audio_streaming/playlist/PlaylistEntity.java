@@ -29,7 +29,11 @@ public class PlaylistEntity {
   @JoinColumn(name = "user_id")
   private UserInfoEntity userInfo;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "playlist")
+  @OneToMany(
+      fetch = FetchType.LAZY,
+      cascade = CascadeType.ALL,
+      orphanRemoval = true,
+      mappedBy = "playlist")
   private List<PlaylistTrackEntity> tracks;
 
   @Column(name = "description")

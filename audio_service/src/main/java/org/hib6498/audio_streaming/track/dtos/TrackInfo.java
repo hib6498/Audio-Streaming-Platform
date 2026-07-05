@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult;
-import org.hib6498.audio_streaming.user.UserIdDisplayNameDTO;
 import org.hib6498.audio_streaming.track.TrackEntity;
 import org.hib6498.audio_streaming.track.TrackRole;
 import org.hib6498.audio_streaming.track.TrackUserEntity;
+import org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult;
+import org.hib6498.audio_streaming.user.UserIdDisplayNameDTO;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Data
@@ -25,7 +25,7 @@ public class TrackInfo {
   public static TrackInfo from(TrackEntity track) {
     TrackInfo info =
         new TrackInfo()
-                .setTrackId(track.getTrackId())
+            .setTrackId(track.getTrackId())
             .setArtworkUrl(craftArtworkUrl(track.getTrackId()))
             .setCreatedAt(track.getCreatedAt())
             .setTitle(track.getTitle())
@@ -53,10 +53,9 @@ public class TrackInfo {
   }
 
   private static String craftArtworkUrl(Long trackId) {
-    return ServletUriComponentsBuilder
-            .fromCurrentContextPath()
-            .path("/track/{id}/artwork")
-            .buildAndExpand(trackId)
-            .toUriString();
+    return ServletUriComponentsBuilder.fromCurrentContextPath()
+        .path("/track/{id}/artwork")
+        .buildAndExpand(trackId)
+        .toUriString();
   }
 }

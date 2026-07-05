@@ -50,7 +50,8 @@ public class UserService {
   }
 
   public UserInfoEntity populateUserInfoObject(UserInfoEntity partialInfo) {
-    if (Objects.isNull(partialInfo)) throw new UnauthorizedAccessException("You are not logged in.");
+    if (Objects.isNull(partialInfo))
+      throw new UnauthorizedAccessException("You are not logged in.");
     Optional<UserInfoEntity> user = userInfoRepository.findById(partialInfo.getUserId());
     if (user.isPresent()) return user.get();
 

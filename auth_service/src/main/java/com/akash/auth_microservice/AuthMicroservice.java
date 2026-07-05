@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class AuthMicroservice {
 
   public static void main(String[] args) {
+    System.out.println("Working dir: " + System.getProperty("user.dir"));
     SpringApplication.run(AuthMicroservice.class, args);
   }
 }

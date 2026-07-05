@@ -1,7 +1,6 @@
 package org.hib6498.audio_streaming.playlist;
 
 import java.util.List;
-
 import org.hib6498.audio_streaming.track.TrackEntity;
 import org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult;
 import org.springframework.data.jpa.repository.JpaRepository;

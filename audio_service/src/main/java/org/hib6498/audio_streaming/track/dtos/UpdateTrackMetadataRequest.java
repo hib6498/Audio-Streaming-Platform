@@ -5,6 +5,4 @@ import java.util.Set;
 import org.springframework.web.multipart.MultipartFile;
 
 public record UpdateTrackMetadataRequest(
-    String trackName,
-    MultipartFile coverArt,
-    Optional<Set<Long>> featureIds) {}
+    String trackName, MultipartFile coverArt, Optional<Set<Long>> featureIds) {}

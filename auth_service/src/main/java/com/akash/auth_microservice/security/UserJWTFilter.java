@@ -27,7 +27,8 @@ public class UserJWTFilter extends OncePerRequestFilter {
 
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
-    return request.getServletPath().startsWith("/user/register") || request.getServletPath().startsWith("/user/login");
+    return request.getServletPath().startsWith("/user/register")
+        || request.getServletPath().startsWith("/user/login");
   }
 
   @Override

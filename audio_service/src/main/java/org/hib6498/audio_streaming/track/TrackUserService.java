@@ -4,7 +4,6 @@ import static org.hib6498.audio_streaming.track.daos.TrackArtistQueryConverter.c
 
 import java.util.List;
 import java.util.Objects;
-
 import org.hib6498.audio_streaming.track.daos.TrackArtistQueryResult;
 import org.hib6498.audio_streaming.track.dtos.TracksForArtist;
 import org.hib6498.audio_streaming.user.UserInfoEntity;
@@ -26,7 +25,7 @@ public class TrackUserService {
   }
 
   public List<TrackUserEntity> saveFeaturesForTrack(
-          TrackEntity track, List<UserInfoEntity> featuresInfo, Long ownerId) {
+      TrackEntity track, List<UserInfoEntity> featuresInfo, Long ownerId) {
     List<TrackUserEntity> features =
         featuresInfo.stream()
             .map(
@@ -46,6 +45,4 @@ public class TrackUserService {
 
     return trackUserRepository.saveAll(features);
   }
-
-
 }

@@ -34,7 +34,11 @@ public class TrackEntity {
   @Column(name = "created_at", updatable = false, nullable = false)
   private Timestamp createdAt;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "track")
+  @OneToMany(
+      fetch = FetchType.LAZY,
+      cascade = CascadeType.ALL,
+      orphanRemoval = true,
+      mappedBy = "track")
   private List<TrackUserEntity> features;
 
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

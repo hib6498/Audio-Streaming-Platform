@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.UUID;
-
 import org.hib6498.audio_streaming.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -18,18 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class StorageService {
-  private final Path trackStoragePath;
   private final Path artworkStoragePath;
 
-  public StorageService(
-      @Value("${TRACK_STORAGE_LOCATION}") String trackStorageLoc,
-      @Value("${ARTWORK_STORAGE_LOCATION}") String artworkStorageLoc) {
-    trackStoragePath = Paths.get(trackStorageLoc);
+  public StorageService(@Value("${ARTWORK_STORAGE_LOCATION}") String artworkStorageLoc) {
     artworkStoragePath = Paths.get(artworkStorageLoc);
-  }
-
-  public String saveTrack(MultipartFile file) {
-    return transferFile(file, trackStoragePath);
   }
 
   public String saveArtwork(MultipartFile file) {

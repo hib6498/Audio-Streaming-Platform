@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-//note: i dont think this will be used anymore
-//this was used before rabbitmq was introduced in this project.
-//but just in case if queue is busy, these synchronous calls shall be used
+// note: i dont think this will be used anymore
+// this was used before rabbitmq was introduced in this project.
+// but just in case if queue is busy, these synchronous calls shall be used
 @Component
 public class TokenManager {
 

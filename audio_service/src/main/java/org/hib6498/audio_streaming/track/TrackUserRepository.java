@@ -42,6 +42,4 @@ public interface TrackUserRepository extends JpaRepository<TrackUserEntity, Trac
           ORDER BY t.createdAt DESC
         """)
   List<TrackArtistQueryResult> findAllTracksWithArtists();
-
-
 }

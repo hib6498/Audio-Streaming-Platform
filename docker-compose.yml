@@ -1,29 +1,50 @@
-name: audio-streaming
+name: "audio-streaming"
 
 services:
-#  audio-service:
-#    build:
-#      context: "./audio_service"
-#    ports:
-#      - "8090:8080"
-#    depends_on:
-#      postgres:
-#        condition: service_started
-#      rabbit-mq:
-#        condition: service_started
-#      garage:
-#        condition: service_started
-#
-#  auth-service:
-#    build:
-#      context: "./auth_service"
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      postgres:
-#        condition: service_started
-#      rabbit-mq:
-#        condition: service_started
+  audio-service:
+    build:
+      context: "./audio_service"
+    environment:
+      ARTWORK_STORAGE_LOCATION: "/app/images"
+    volumes:
+      - "./data/artwork:/app/images"
+    ports:
+      - "8090:8080"
+    depends_on:
+      postgres:
+        condition: "service_started"
+      rabbit-mq:
+        condition: "service_started"
+      garage:
+        condition: "service_started"
+      transcoder:
+        condition: "service_started"
+
+  auth-service:
+    build:
+      context: "./auth_service"
+    ports:
+      - "8080:8080"
+    environment:
+      STORAGE_LOCATION: "/app/images"
+    volumes:
+      - "./data/profile-pic:/app/images"
+    depends_on:
+      postgres:
+        condition: "service_started"
+      rabbit-mq:
+        condition: "service_started"
+
+  transcoder:
+    build:
+      context: "./transcoding"
+    env_file:
+      - "./transcoding/.env"
+    depends_on:
+      rabbit-mq:
+        condition: "service_started"
+      garage:
+        condition: "service_started"
 
   garage:
     image: "dxflrs/garage:v2.3.0"
@@ -42,7 +63,7 @@ services:
       - GARAGE_DEFAULT_ACCESS_KEY=255ac1200a4ed75e3b4d11969cef668ca2c59d62c86a3fae8fa5990863f5ab99
       - GARAGE_DEFAULT_SECRET_KEY=80338d8f548b522d7b6673f71907641553254d1a91cf1dc3df9b5184f5b971e6
       - GARAGE_DEFAULT_BUCKET=my-bucket
-    restart: unless-stopped
+    restart: "unless-stopped"
 
   rabbit-mq:
     container_name: "rabbitmq"

@@ -16,8 +16,6 @@ public class CredentialsSeed {
     String secret = "WxHdcuRXtW/2QKoA6No99tMGaB4EYwq92YpOV70JeVs=";
 
     serviceRepository.save(
-        new Service()
-            .setClientId(clientId)
-            .setSecret(passwordEncoder.encode(secret)));
+        new Service().setClientId(clientId).setSecret(passwordEncoder.encode(secret)));
   }
 }

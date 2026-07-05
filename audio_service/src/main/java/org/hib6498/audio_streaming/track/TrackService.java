@@ -138,7 +138,7 @@ public class TrackService {
       TrackEntity track, List<UserInfoEntity> featuresInfo, Long ownerId) {
 
     track.getFeatures().clear();
-    trackRepository.flush(); //gotta force this or it will raise NonUniqueObjectException
+    trackRepository.flush(); // gotta force this or it will raise NonUniqueObjectException
 
     List<TrackUserEntity> features =
         featuresInfo.stream()

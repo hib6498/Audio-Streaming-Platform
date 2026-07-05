@@ -12,9 +12,8 @@ import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
-//dont know why the hell i used userdetails
-//TODO: get rid of userdetails interface
+// dont know why the hell i used userdetails
+// TODO: get rid of userdetails interface
 @Data
 @Entity
 @Table(name = "user_info_replica")
