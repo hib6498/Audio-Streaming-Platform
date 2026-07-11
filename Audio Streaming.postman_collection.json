@@ -1,0 +1,1025 @@
+{
+  "info": {
+    "_postman_id": "387a944d-c88e-45a8-972f-f2347f6761cc",
+    "name": "Audio Streaming",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40798993"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();\r",
+                  "\r",
+                  "if (json.accessToken) {\r",
+                  "    pm.collectionVariables.set(\"accessToken\", json.accessToken);\r",
+                  "}\r",
+                  "\r",
+                  "const refreshToken = pm.cookies.get(\"jwtRT\");\r",
+                  "\r",
+                  "if (refreshToken) {\r",
+                  "    pm.collectionVariables.set(\"jwtRT\", refreshToken);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"root\",\r\n    \"password\": \"root\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{auth_base_url}}/user/login",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "user",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"root2\",\r\n    \"displayName\": \"root2\",\r\n    \"email\": \"root2@gmail.com\",\r\n    \"password\": \"root2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{auth_base_url}}/user/register",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "user",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "me",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{auth_base_url}}/user/me",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "user",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Client Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();\r",
+                  "\r",
+                  "if (json.accessToken) {\r",
+                  "    pm.collectionVariables.set(\"clientAccessToken\", json.accessToken);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": \"audio-service\",\r\n    \"secret\": \"{{audio_service_secret}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{auth_base_url}}/service/login",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "service",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const refreshToken = pm.collectionVariables.get(\"jwtRT\");\r",
+                  "\r",
+                  "if (refreshToken) {\r",
+                  "    pm.request.headers.upsert({\r",
+                  "        key: \"Cookie\",\r",
+                  "        value: `jwtRT=${refreshToken}`\r",
+                  "    });\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();\r",
+                  "\r",
+                  "if (json.accessToken) {\r",
+                  "    pm.collectionVariables.set(\"accessToken\", json.accessToken);\r",
+                  "    console.log(\"Access token saved\");\r",
+                  "} else {\r",
+                  "    console.log(\"Access token not found in response\");\r",
+                  "}\r",
+                  "\r",
+                  "const refreshToken = pm.cookies.get(\"jwtRT\");\r",
+                  "\r",
+                  "if (refreshToken) {\r",
+                  "    pm.collectionVariables.set(\"jwtRT\", refreshToken);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "jwtRT={{jwtRT}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{auth_base_url}}/user/refresh",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "user",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{auth_base_url}}/user/1",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "user",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{clientAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"ids\": [1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{auth_base_url}}/service/users",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "service",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Hello",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{auth_base_url}}/hello",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "hello"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Profile Pic",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{auth_base_url}}/user/1/profile-pic",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "user",
+                "1",
+                "profile-pic"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile Pic",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "a9391d6f-231d-4693-89d6-bf431f513ef7",
+                  "src": "/C:/Users/Akash/Downloads/soundcloud-pfp.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{auth_base_url}}/user/update/profile-pic",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "user",
+                "update",
+                "profile-pic"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Description",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"desc\": \"a test string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{auth_base_url}}/user/update/description",
+              "host": [
+                "{{auth_base_url}}"
+              ],
+              "path": [
+                "user",
+                "update",
+                "description"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Audio",
+      "item": [
+        {
+          "name": "Get track",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/track/256",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "track",
+                "256"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "All Artists",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/user/all",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "user",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tracks For user",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/user/1/discography",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "user",
+                "1",
+                "discography"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Track Artwork",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/track/352/artwork",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "track",
+                "352",
+                "artwork"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Tracks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/track/all",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "track",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Playlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Test\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{audio_base_url}}/playlist/new",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "playlist",
+                "new"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Playlist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/playlist/1",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "playlist",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Track to Playlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/playlist/1/tracks/352",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "playlist",
+                "1",
+                "tracks",
+                "352"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Playlists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/playlist/all",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "playlist",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Presigned Url for Track Upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"trackName\": \"test1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{audio_base_url}}/track/presigned-url",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "track",
+                "presigned-url"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Complete Track Upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"trackId\": 804, \r\n    \"urlId\": 102\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{audio_base_url}}/track/upload/complete",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "track",
+                "upload",
+                "complete"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Track Stream Url",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Update Track Metadata",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "trackName",
+                  "value": "Youngblood",
+                  "type": "text",
+                  "uuid": "4cab39fd-05b0-4c4f-bc45-629df721d290"
+                },
+                {
+                  "key": "coverArt",
+                  "type": "file",
+                  "uuid": "af3fb4ae-8f31-4c71-8e02-d4aea3a1b83f",
+                  "src": "/C:/Users/Akash/Downloads/youngblood_album.jpeg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{audio_base_url}}/track/153",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "track",
+                "153"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All User Playlists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/user/352/playlists",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "user",
+                "352",
+                "playlists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Track From Playlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/playlist/102/tracks/253",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "playlist",
+                "102",
+                "tracks",
+                "253"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Track",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{audio_base_url}}/track/402",
+              "host": [
+                "{{audio_base_url}}"
+              ],
+              "path": [
+                "track",
+                "402"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Garage",
+      "item": [
+        {
+          "name": "Remove Incomplete Multipart",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Track",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "b48cc45a114c4b0b8b6193c7.3dJ9KNEEK0vbQwlqX4UCx-61-n6o_zscbCbh6Hxa1h4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"corsRules\": [\r\n    {\r\n      \"AllowedOrigin\": [\"*\"],\r\n      \"AllowedMethod\": [\"GET\", \"PUT\", \"POST\", \"DELETE\", \"HEAD\"],\r\n      \"AllowedHeader\": [\"*\"],\r\n      \"ExposeHeader\": [],\r\n      \"MaxAgeSecond\": 3000\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3903/v2/UpdateBucket?id=5d46b904000e6ac832417e1b7913f8e6b8af725f282976f175d797ea74d31f33",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3903",
+              "path": [
+                "v2",
+                "UpdateBucket"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "5d46b904000e6ac832417e1b7913f8e6b8af725f282976f175d797ea74d31f33"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "audio_service_secret",
+      "value": ""
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "clientAccessToken",
+      "value": ""
+    },
+    {
+      "key": "jwtRT",
+      "value": ""
+    },
+    {
+      "key": "audio_base_url",
+      "value": ""
+    },
+    {
+      "key": "auth_base_url",
+      "value": ""
+    }
+  ]
+}
