@@ -33,6 +33,7 @@ Client
 ```
 
 Schema
+![er_diagram](https://github.com/hib6498/Audio-Streaming-Platform/blob/5ba5a80de53177357db8616bc4db50d0b95e1e21/er_diagram.png)
 ---
 
 ## Services
