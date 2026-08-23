@@ -66,7 +66,7 @@ public class JWTUtils {
     String token =
         JWT.create()
             .withSubject("refresh")
-            .withClaim("id", user.getUserId())
+            .withClaim("id", user.getUserId().toString())   //keep it consistent with access token
             .withIssuedAt(issuedAt)
             .withIssuer("a-ms")
             .withExpiresAt(expiresAt)
@@ -93,7 +93,7 @@ public class JWTUtils {
     JWTVerifier verifier =
         JWT.require(Algorithm.HMAC256(refreshKey))
             .withIssuer("a-ms")
-            .withClaim("id", token.getUser().getUserId())
+            .withClaim("id", token.getUser().getUserId().toString())
             .withSubject("refresh")
             .build();
     DecodedJWT jwt = verifier.verify(token.getToken());

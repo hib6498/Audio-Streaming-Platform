@@ -1,6 +1,14 @@
 name: "audio-streaming"
 
 services:
+  config-server:
+    build:
+      context: "./config"
+    environment:
+      STORAGE_LOCATION: "/app/images"
+    ports:
+      - "8888:8888"
+
   audio-service:
     build:
       context: "./audio_service"
@@ -9,7 +17,7 @@ services:
     volumes:
       - "./data/artwork:/app/images"
     ports:
-      - "8090:8080"
+      - "8090:8090"
     depends_on:
       postgres:
         condition: "service_started"
