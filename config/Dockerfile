@@ -6,5 +6,5 @@ RUN ./gradlew build -x test
 FROM eclipse-temurin:17-jre-alpine AS runtime
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
-COPY --from=build /app/application.properties application.properties
+#COPY --from=build /app/application.y application.properties
 ENTRYPOINT ["java", "-jar", "app.jar"]

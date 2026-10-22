@@ -2,4 +2,3 @@ build
 .gradle
 .idea
 out
-src/*/application.properties
