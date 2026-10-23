@@ -9,10 +9,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAKey;
-import java.security.spec.InvalidKeySpecException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,8 +20,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JWTUtils {
-  private final RSAKey privateKey;
-  private final RSAKey publicKey;
+  private final RSAPrivateKey privateKey;
+  private final RSAPublicKey publicKey;
 
   @Value("${REFRESH_KEY}")
   private String refreshKey;
@@ -34,10 +32,9 @@ public class JWTUtils {
   @Value("${REFRESH_TOKEN_EXPIRATION}")
   private int refreshTokenExpirationInDays;
 
-  public JWTUtils(RSA_KeyUtils rsaKeyUtils)
-      throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-    privateKey = rsaKeyUtils.getRSAPrivateKey();
-    publicKey = rsaKeyUtils.getRSAPublicKey();
+  public JWTUtils(AuthRSAKeyPairs keyPairs) {
+    this.privateKey = keyPairs.privateKey();
+    this.publicKey = keyPairs.publicKey();
   }
 
   public String generateAccessToken(Long userId)
@@ -66,7 +63,7 @@ public class JWTUtils {
     String token =
         JWT.create()
             .withSubject("refresh")
-            .withClaim("id", user.getUserId().toString())   //keep it consistent with access token
+            .withClaim("id", user.getUserId().toString()) // keep it consistent with access token
             .withIssuedAt(issuedAt)
             .withIssuer("a-ms")
             .withExpiresAt(expiresAt)

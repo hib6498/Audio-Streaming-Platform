@@ -8,18 +8,18 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAKey;
+import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import org.hib6498.audio_streaming.user.UserInfoEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JWTUtils {
-  private final RSAKey publicKey;
+  private final RSAPublicKey publicKey;
 
-  public JWTUtils(RSA_KeyUtils rsaKeyUtils)
+  public JWTUtils(AuthRSAPublicKey authRSAPublicKey)
       throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-    publicKey = rsaKeyUtils.getRSAPublicKey();
+    publicKey = authRSAPublicKey.publicKey();
   }
 
   public UserInfoEntity validateTokenAndRetrieveUser(String token) throws JWTVerificationException {

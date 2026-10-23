@@ -12,7 +12,8 @@ import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,18 +26,18 @@ public class JWTUtilsTest {
 
   @BeforeEach
   public void setUp() throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
-    RSA_KeyUtils rsaKeyUtils = mock(RSA_KeyUtils.class);
+    AuthRSAKeyPairs authRSAKeyPairs = mock(AuthRSAKeyPairs.class);
     KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("RSA");
     keyGenerator.initialize(2048);
     KeyPair keyPair = keyGenerator.generateKeyPair();
 
-    RSAKey privateKey = (RSAKey) keyPair.getPrivate();
-    RSAKey publicKey = (RSAKey) keyPair.getPublic();
+    RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+    RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
 
-    when(rsaKeyUtils.getRSAPrivateKey()).thenReturn(privateKey);
-    when(rsaKeyUtils.getRSAPublicKey()).thenReturn(publicKey);
+    when(authRSAKeyPairs.privateKey()).thenReturn(privateKey);
+    when(authRSAKeyPairs.publicKey()).thenReturn(publicKey);
 
-    jwtUtils = new JWTUtils(rsaKeyUtils);
+    jwtUtils = new JWTUtils(authRSAKeyPairs);
     ReflectionTestUtils.setField(jwtUtils, "refreshKey", "test-refresh-key");
     ReflectionTestUtils.setField(jwtUtils, "accessTokenExpirationInMinutes", 15);
     ReflectionTestUtils.setField(jwtUtils, "refreshTokenExpirationInDays", 7);
